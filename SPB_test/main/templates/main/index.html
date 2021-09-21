@@ -1,0 +1,84 @@
+{% extends 'main/base.html' %}
+
+{% block 'body' %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <div id="tree">
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col-8 col-sm-6">
+          Level 2: .col-8 .col-sm-6
+        </div>
+        <div class="col-4 col-sm-6">
+          Level 2: .col-4 .col-sm-6
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var tree = [{
+                       text: "Node 1", // текстовое значение, отображаемое строкой узла
+                       icon: "glyphicon glyphicon-play-circle", // Значок, отображаемый на узле, значок, поддерживающий строку начальной загрузки
+              selectedIcon: "glyphicon glyphicon-ok", // Значок, отображаемый, когда узел выбран string
+                       color: "# ff0000", // Цвет переднего плана строки узла
+                       backColor: "# 1606ec", // Цвет фона строки узла
+                       href: "#http: //www.baidu.com", // Гиперссылка на узел
+                       selectable: true, // Можно ли выбрать узел отметки. False означает, что узел должен использоваться как расширенный заголовок и не будет запускать событие выбора. строка
+                       state: {// Описать начальное состояние объекта узла
+                               checked: true, // выбран ли узел
+                               // * disabled: true, * / // отключать ли узел
+                               Expand: true, // Следует ли раскрывать узел
+                               selected: true // выбран ли узел
+              },
+                       tags: ['информация о тегах 1', 'информация о тегах 2'], // Добавляем дополнительную информацию в правую часть узла (аналогично значку Boostrap) Массив строк
+              nodes: [{
+                  text: "Child 1",
+                  nodes: [{
+                      text: "Grandchild 1"
+                  }, {
+                      text: "Grandchild 2"
+                  }]
+              }, {
+                  text: "Child 2"
+              }]
+          }, {
+              text: "Parent 2",
+              nodes: [{
+                  text: "Child 2",
+                  nodes: [{
+                      text: "Grandchild 3"
+                  }, {
+                      text: "Grandchild 4"
+                  }]
+              }, {
+                  text: "Child 2"
+              }]
+          }, {
+              text: "Parent 3"
+          }, {
+              text: "Parent 4"
+          }, {
+              text: "Parent 5"
+          }];
+
+        var treeJopa = $('#tree').treeview({
+            data: tree,
+            multiSelect: true,
+            onNodeSelected: function (event, node) {
+                $('#tree').treeview('expandNode', node['nodeId']);
+            },
+            onNodeUnselected : function (event, node) {
+                $('#tree').treeview('collapseNode', node['nodeId']);
+            }
+        });
+
+        treeJopa.treeview('collapseAll', { levels: 3, silent: true });
+    });
+</script>
+{% endblock %}
